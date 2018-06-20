@@ -37,7 +37,7 @@ public class TileOverlaysUtils {
 
         //Add TileProvider to the map and get back the TileOverlay
         TileOverlay tileOverlay = map.addTileOverlay(new TileOverlayOptions()
-        .tileProvider(tileProvider))
+        .tileProvider(tileProvider));
     }
 
     //Check that the tile server supports the required x, y, and zoom.
@@ -52,7 +52,7 @@ public class TileOverlaysUtils {
             return false;
         }
 
-        return true
+        return true;
     }
 
     private void setTransparencyForTileOverlay(MapView mapView, TileOverlay mTileOverlay) {

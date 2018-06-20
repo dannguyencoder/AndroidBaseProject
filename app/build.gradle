@@ -52,4 +52,16 @@ dependencies {
 
     //image loading with picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //set-up firebase
+    compile 'com.google.firebase:firebase-core:16.0.0'
+    //for firebase database
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+
+    //for firebase cloud messaging
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+
+    //for firebase crash analytics
+    implementation 'com.google.firebase:firebase-crash:9.0.0'
 }
+apply plugin: 'com.google.gms.google-services'
