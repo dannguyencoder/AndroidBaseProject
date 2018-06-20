@@ -63,5 +63,8 @@ dependencies {
 
     //for firebase crash analytics
     implementation 'com.google.firebase:firebase-crash:9.0.0'
+
+    //for firebase authentication
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
 }
 apply plugin: 'com.google.gms.google-services'
