@@ -9,6 +9,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        /*Define schema locations
+        When compiling the code, the schemas for the table will be stored
+        in a schemas/ directory assuming this statement has been
+        included your app/build.gradle file. These schemas should be
+        checked into your code based.*/
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -21,6 +32,7 @@ android {
 ext {
     supportLibVersion = '27.1.1'
     googlePlayVersion = '15.0.0'
+    roomVersion = "1.1.0"
 }
 
 dependencies {
@@ -66,5 +78,12 @@ dependencies {
 
     //for firebase authentication
     implementation 'com.google.firebase:firebase-auth:16.0.2'
+
+    // Room for simple persistence with an ORM
+    /*Next, within your app/build.gradle, add Room to your dependency list.
+    We create a separate variable to store the version number
+    to make it easier to change later:*/
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
 }
 apply plugin: 'com.google.gms.google-services'

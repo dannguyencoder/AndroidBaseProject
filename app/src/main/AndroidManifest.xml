@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vinhcrazyyyy.androidbaseproject">
 
+    <!--Modify your AndroidManifest.xml file to reference this
+    Application object for the android:name property:-->
     <application
         android:allowBackup="true"
+        android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -51,6 +54,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <!--Using the Content Provider-->
+        <provider
+            android:name=".persistence.content_providers.MovieProvider"
+            android:authorities="com.androidessence.moviedatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>
