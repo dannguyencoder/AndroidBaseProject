@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#E6E6E6"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:contentPadding="8dp"
+
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+    <!--Adding ripple effect
+    By default CardView is not tappable
+    and it doesn't show any touch feedback.
+    Touch feedback animations provide users
+    with visual feedback when a CardView
+    is touched. To enable this behaviour,
+    add the following attributes to
+    your CardView
+
+    android:clickable = "true"
+    android:foreground = "?android:attr/selectableItemBackground"
+
+    Using the android:foreground = "?android:attr/selectableItemBackground" property
+    on a CardView enables the ripple effect
+    to originate from touch origin
+    -->
+
+    <!--On platform before Android L,
+    CardView adds padding to support
+    corner radius, since rounded corner clipping
+    can be expensive operation. Similarly,
+    for shadows, before Android L, CardView
+    adds content padding and draws shadows
+    to that aread. This content padding is based
+    on the elevation, as per the docs
+
+    The padding amount is equal to
+    maxCardElevation + (1 - cos45) * cornerRadius
+    on the sides and
+    maxCardelevation * 1.5 + (1 - cos45) * cornerRadius
+    on top and bottom
+
+    Thus, if you would like to specify
+    custom padding on the content, you need
+    to use a new attribute card_view:contentPadding
+
+    Similarly, to change the background color
+    of a CardView, you need to use a new attribute
+    card_view:cardBackgroundColor
+    -->
+
+    <!-- Main Content View -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

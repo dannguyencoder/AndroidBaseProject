@@ -85,5 +85,18 @@ dependencies {
     to make it easier to change later:*/
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
+
+    //paging library - infinite scrolling
+    implementation "android.arch.paging:runtime:1.0.0"
+
+    //ReyclerView Animators
+    //If you are using a RecyclerView 23.1.0 or higher
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
+
+    //If you are using a Recyclerview 23.0.1 or below
+    implementation 'jp.wasabeef:recyclerview-animators:1.3.0'
+
+    //support for card view
+    implementation 'com.android.support:cardview-v7:27.1.1'
 }
 apply plugin: 'com.google.gms.google-services'
