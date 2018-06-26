@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--(Optional) Declare Account Preferences
+
+These preferences will be shown when accessing
+the account's preferences from the device Settings
+ screen. This allows the user more control over
+ their account.
+
+To create this, we need to create a
+resource package in 'res' called, 'xml',
+if not already created,
+and create 'syncsettings.xml'.-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="use_sync"
+        android:title="Toggle Options"
+        android:summary="This is an example
+                            toggle setting"/>
+</PreferenceScreen>

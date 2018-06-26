@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Declare the SyncAdapter
+* We need to create a resource package in
+'res' called 'xml', if not already created,
+* and create 'syncadapter.xml'
+*
+* android:contentAuthority = (string) -
+Specifies our ContentProvider's authority, must
+* EXACTLY match
+ * android:accountType = (string) - must
+ match EXACTLY the account type defined in
+ * our AccountGeneral
+ * android:userVisible = (true|false) - True
+ if sync is visible to the user
+ * android:allowParallelSyncs = (true|false) -
+ True if can sync in parallel
+ * android:isAlwaysSyncable = (true|false) -
+ True if can be synced at anytime
+ * android:supportsUploading = (true|false) -
+ True if uploads to the server-->
+<sync-adapter
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:contentAuthority = "com.example/sync"
+    android:accountType = "com.example.syncaccount"
+    android:userVisible = "true"
+    android:allowParallelSyncs = "false"
+    android:isAlwaysSyncable = "true"
+    android:supportsUploading = "true"/>
+
+<!--Create a Sync Service-->

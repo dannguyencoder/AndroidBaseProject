@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Declare the Authenticator
+     * We need to create a resource package
+     in 'res' called 'xml', if not already created
+     ,
+     * and create 'authenticator.xml'.
+     *
+     * android:accountType = (string) -
+     identify our account type when an app wants
+     * to authenticate us
+     (match EXACTLY in our AccountsGeneral)
+     * android:label=(string) - identify
+     our account type when an app wants to
+     authenticate
+     * us (match EXACTLY in our AccountsGeneral)
+     * android:label=(string) - Name of
+     the account on the device Settings
+     * android:icon=(drawable) - is the
+     normal icon that will appear in the
+     'Accounts'
+     * Android settings
+     * android:smallIcon=(drawable) -
+     (optional) is the small icon that will show
+     * for the account
+     * android:accountPreferences=(xml) -
+     (optional) specifies extra settings
+     for our account-->
+<account-authenticator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="com.example.syncaccount"
+    android:icon="@mipmap/ic_launcher_round"
+    android:smallIcon="@mipmap/ic_launcher_round"
+    android:accountPreferences="@xml/syncsettings"
+    android:label="@string/app_name"
+    />
+
+<!--Decalre the Authenticator Service
+We need to declare our AuthenticatorService in the AndroidManifest.xml file
+<service android:name = ".example.AuthenticatorService">
+    <intent-filer>
+        <action android:name="android.accounts.AccountAuthenticator"/>
+        <meta-data
+            android:name = "android.accounts.AccountAuthenticator"
+            android:resource = "@xml/authenticator"/>
+    </intent-filter>
+</service>
+-->

@@ -2,6 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vinhcrazyyyy.androidbaseproject">
 
+    <!--/*Starting a Service at Device Boot
+    *
+    * In certain cases, we might want a service to start right after the device boots up.
+    * This is a specific case of a broader trigger of launching a service when a particular
+    * broadcast is received by your application. To start a service when a broadcast
+    * (such as boot message) is received, we can start by adding the necessary permission
+    * to receive this message in our manifest AndroidManifest.xml in the <manifest> element*
+    /-->
+    <!--1. Add permissions to our manifest-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!--We need to link this boot message with a particular broadcast receiver
+    which will receive and processes the "boot" message issued by the phone.
+    Second, let's define our broadcast receiver class
+    extending from "WakfulBroadcastReceiver" which ensures the device
+    will stay awake until service has been started-->
+
+    <!--Declare Proper Permissions
+    * Before continuing, we must add these NEEDED permissions to the manifest.xml
+    * so we can use SyncAdapter, AccountManager, and SyncSettings.-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
+
     <!--Modify your AndroidManifest.xml file to reference this
     Application object for the android:name property:-->
     <application
@@ -62,6 +89,113 @@
             android:exported="false"
             android:protectionLevel="signature"
             android:syncable="true"/>
+
+        <!--2. Registering the IntentService
+            Each service needs to be registered in the manifest for your app
+        -->
+        <service
+            android:name=".services.intent_service.intent_service_result_receiver.MyIntentServiceResultReceiver"
+            android:exported="false"/>
+        <!--Notice that we specify this in the manifest file with the
+        name and exported properties set. The exported determines whether or not
+        the service can be executed by other applications-->
+        <!--==> 3. Executing the IntentService -->
+
+        <!--Registering IntentService for BroadcastReceiver-->
+        <service
+            android:name=".services.intent_service.intent_service_broadcast_receiver.MyIntentServiceBroadcastReceiver"
+            android:exported="false"/>
+
+        <!--3. Register alarm service and alarm receiver-->
+        <receiver android:name=".services.intent_service.alarm_manager.MyAlarmReceiver"
+            android:process=":remote">
+        </receiver>
+        <!--Note that we define android:process=":remote" so that
+        the BroadcastReceiver will run in a separate process so that it will continue
+        to stay alive if the app has closed. See this StackOverFlow post for more details
+        http://stackoverflow.com/questions/4311069/should-i-use-android-process-remote-in-my-receiver
+
+        Finally, we need to actually start the periodic alarm that will trigger the receiver
+        by registering with the Alarm system service. Let's set up the recurring alarm
+        in our Activity-->
+        
+        <service android:name=".services.intent_service.alarm_manager.MyAlarmService"
+            android:exported="false"/>
+
+        <!--/*Now that we have created the receiver to start our service, within our manifest
+    * AndroidManifest.xml in the <application> element, we need to add our broadcast receiver
+    * specifying a fully qualified path:*/-->
+        <!--3. Declare receiver in the AndroidManifest.xml-->
+        <receiver android:name=".services.intent_service.starting_service_device_boot.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <!--This register the receiver and applies the BOOT_COMPLETED message
+        which ensures the receiver is launched when the device boots up.
+        The boot message is received and the "wakeful" receiver launches the service.
+        Don't forget to "release the wake lock" within onHandleIntent()
+        so that the device can go back to sleep after the service is launched-->
+
+        <!--Direct Reply Intent Service-->
+        <service android:name=".services.notifications.DirectReplyIntent"/>
+
+        <!--Registering the Service
+        Each service needs to be "registered in the manifest" for your app
+        in AndroidManifest.xml-->
+        <service
+            android:name=".services.custom_services.MyCustomService"
+            android:exported="false"/>
+        <!--Notice that we specify this in the manifest with the "name" and "exported"
+        properties set. "exported" determines whether or not the service can be executed
+        by other applications.-->
+
+        <!--
+        Declare the ContentProvider
+        * In order to use our ContentProvider, we need to declare it
+        in the AndroidManifest.xml file.
+        * It is important to note that:
+        * 1. "android:authorities" must match our ContentProvider's authority exactly, and
+        * 2. "android:syncable" must be true
+        -->
+        <provider
+            android:authorities="com.exampl.sync"
+            android:name=".server_synchronization.ArticleProvider"
+            android:exported="false"
+            android:syncable="true"/>
+
+        <!--Decalre the Authenticator Service
+            We need to declare our AuthenticatorService in the AndroidManifest.xml file-->
+        <service android:name=".server_synchronization.AuthenticatorService">
+            <intent-filter>
+                <action android:name="android.account.AccountAuthenticator"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator"/>
+        </service>
+        <!--Step 4 & 5: The SyncAdapter and SyncService
+        The next steps requires us to have our SyncAdapter and another bound Service
+        to allow Android to run it. These are some of the benefits it will offer us:
+
+        1. Status check and start synchronization when network is available
+        2. Scheduler that synchronizes using criteria
+        3. Auto synchronization if it had previously failed
+        4. Saves battery power because the system will batch networking-->
+
+        <!--Decalre SyncService
+        We need to declare our SyncService in the manifest.xml file-->
+        <service android:name=".server_synchronization.SyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter"/>
+        </service>
+
     </application>
 
 </manifest>
